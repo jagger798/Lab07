@@ -1,3 +1,5 @@
+from ast import increment_lineno
+
 import flet as ft
 from UI.alert import AlertManager
 
@@ -36,10 +38,14 @@ class View:
         self.txt_titolo = ft.Text(value="Biblioteche di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        # TODO
+        self.dd_biblioteca = ft.Dropdown(label="Biblioteca", width=250, on_select=self.controller.cambia_biblioteca)
+        self.dd_genere = ft.Dropdown(label="Genere", width=250, on_select=self.controller.cambia_genere)
+
 
         # Sezione 3: Libri
-        # TODO
+        self.btn_mostra_libri = ft.Button("Mostra Libri", on_click=self.controller.mostra_libri)
+        self.lista_libri = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
+
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -53,10 +59,19 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            # TODO
+            ft.Row(
+                controls=[self.dd_biblioteca, self.dd_genere],
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
+            ft.Divider(),
+
 
             # Sezione 3: Libri
-            # TODO
+            ft.Row(
+                controls=[self.btn_mostra_libri],
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
+            self.lista_libri,
         )
 
         self.page.scroll = "adaptive"
